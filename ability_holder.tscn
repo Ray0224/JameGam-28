@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://7lmgpkihjajb"]
+
+[ext_resource type="Script" path="res://script/AbilityHolder.gd" id="1_pjw7h"]
+
+[sub_resource type="Curve2D" id="Curve2D_ksyca"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -500, 0, 0, 0, 0, 0, 500, 0)
+}
+point_count = 2
+
+[node name="AbilityHolder" type="Node2D"]
+position = Vector2(952, 926)
+script = ExtResource("1_pjw7h")
+
+[node name="AbilityPlacePath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_ksyca")
+
+[node name="AbilityPathFollow" type="PathFollow2D" parent="AbilityPlacePath"]
+position = Vector2(-500, 0)
+
+[node name="Abilities" type="Node2D" parent="."]
+
+[connection signal="child_exiting_tree" from="Abilities" to="." method="_on_ability_launched"]

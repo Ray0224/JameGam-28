@@ -1,0 +1,27 @@
+[gd_scene load_steps=7 format=3 uid="uid://dgtbq61ewr8hg"]
+
+[ext_resource type="Shader" uid="uid://dkklecyn7wysb" path="res://RayTest/shader/slime.tres" id="1_skh81"]
+[ext_resource type="Texture2D" uid="uid://dtxu6rk3j3n8l" path="res://Sprite/slime.png" id="2_xfd1t"]
+[ext_resource type="Shader" path="res://RayTest/shader/test.gdshader" id="3_d45ld"]
+[ext_resource type="Texture2D" uid="uid://cn6w43d2e717n" path="res://Sprite/Tree.png" id="4_d73h3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6ue0s"]
+shader = ExtResource("1_skh81")
+shader_parameter/condition = 0
+shader_parameter/FloatParameter = 0.75
+shader_parameter/ColorParameter = Color(1, 1, 0.113725, 1)
+shader_parameter/grayPower = 2.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dy4is"]
+shader = ExtResource("3_d45ld")
+
+[node name="test" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_6ue0s")
+texture = ExtResource("2_xfd1t")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_dy4is")
+scale = Vector2(1.01563, 0.914063)
+texture = ExtResource("4_d73h3")

@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://bpgo5n7dsadkl"]
+
+[ext_resource type="Texture2D" uid="uid://boc4b6b2wyrd2" path="res://Sprite/smoke.png" id="1_coqf3"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_elsm7"]
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="Curve" id="Curve_wroqo"]
+min_value = -200.0
+max_value = 380.22
+_data = [Vector2(0.00823045, 380.22), 0.0, 0.0, 0, 0, Vector2(0.617284, -200), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_tesy5"]
+max_value = 5.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.0987654, 1.422), 0.0, 0.0, 0, 0, Vector2(1, 0.632), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_3mxq2"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+modulate = Color(0.568627, 0.568627, 0.568627, 0.403922)
+material = SubResource("CanvasItemMaterial_elsm7")
+amount = 25
+explosiveness = 1.0
+texture = ExtResource("1_coqf3")
+emission_shape = 1
+emission_sphere_radius = 23.82
+direction = Vector2(0, -1)
+spread = 45.35
+gravity = Vector2(0, -50)
+initial_velocity_max = 387.65
+angular_velocity_min = 0.05
+angular_velocity_max = 111.62
+linear_accel_max = 6.2
+linear_accel_curve = SubResource("Curve_wroqo")
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_tesy5")
+color_ramp = SubResource("Gradient_3mxq2")
+anim_speed_max = 0.5
+anim_offset_max = 1.0

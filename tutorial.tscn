@@ -1,0 +1,68 @@
+[gd_scene load_steps=9 format=3 uid="uid://cy1cdnirxjkf1"]
+
+[ext_resource type="Script" path="res://script/tutorial.gd" id="1_4ns02"]
+[ext_resource type="Texture2D" uid="uid://bk7f5h7svgp7y" path="res://Sprite/background.png" id="1_lw7td"]
+[ext_resource type="Texture2D" uid="uid://uiccrqsefwpc" path="res://Sprite/turtorial01.png" id="1_wlfv5"]
+[ext_resource type="Texture2D" uid="uid://c27gepb86jfjd" path="res://Sprite/turtorial02.png" id="2_2b0ju"]
+[ext_resource type="Texture2D" uid="uid://bn77pf41ia01w" path="res://Sprite/turtorial03.png" id="3_p1nsw"]
+[ext_resource type="Texture2D" uid="uid://mrre8wr533mm" path="res://Sprite/BOX_PNG.png" id="5_03gxq"]
+[ext_resource type="FontFile" uid="uid://dclnph7050bji" path="res://font/Cubic_11_1.010_R.ttf" id="5_x7j6d"]
+[ext_resource type="Texture2D" uid="uid://b3xs0sni7xcow" path="res://Sprite/GUN_PNG.png" id="6_rx3u6"]
+
+[node name="Tutorial" type="Node2D"]
+script = ExtResource("1_4ns02")
+
+[node name="BackGround" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_right = 1960.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_lw7td")
+
+[node name="Box" type="Sprite2D" parent="."]
+position = Vector2(1773, 960)
+texture = ExtResource("5_03gxq")
+
+[node name="Gun" type="Sprite2D" parent="."]
+position = Vector2(1696, 205)
+texture = ExtResource("6_rx3u6")
+
+[node name="NextButton" type="Button" parent="."]
+offset_left = 1664.0
+offset_top = 563.0
+offset_right = 1897.0
+offset_bottom = 697.0
+theme_override_fonts/font = ExtResource("5_x7j6d")
+theme_override_font_sizes/font_size = 108
+text = "Next"
+
+[node name="SkipButton" type="Button" parent="."]
+offset_left = 39.0
+offset_top = 919.0
+offset_right = 272.0
+offset_bottom = 1053.0
+theme_override_fonts/font = ExtResource("5_x7j6d")
+theme_override_font_sizes/font_size = 108
+text = "Skip
+"
+
+[node name="Tutorial1" type="Sprite2D" parent="."]
+position = Vector2(714, 543)
+texture = ExtResource("1_wlfv5")
+
+[node name="Tutorial2" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(947, 498)
+texture = ExtResource("2_2b0ju")
+
+[node name="Tutorial3" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(928, 521)
+texture = ExtResource("3_p1nsw")
+
+[connection signal="pressed" from="NextButton" to="." method="_on_next_button_pressed"]
+[connection signal="pressed" from="SkipButton" to="." method="_on_skip_button_pressed"]

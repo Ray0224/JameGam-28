@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cm77cmle8xu64"]
+
+[ext_resource type="Script" path="res://script/AbilityGenerator.gd" id="1_5sbey"]
+
+[node name="AbilityGenarator" type="Node"]
+script = ExtResource("1_5sbey")

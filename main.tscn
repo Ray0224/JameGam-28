@@ -1,0 +1,171 @@
+[gd_scene load_steps=14 format=3 uid="uid://b362pnj5fbnrk"]
+
+[ext_resource type="PackedScene" uid="uid://dcw04ulamf127" path="res://slime.tscn" id="1_8cidp"]
+[ext_resource type="Texture2D" uid="uid://bk7f5h7svgp7y" path="res://Sprite/background.png" id="1_vlsdg"]
+[ext_resource type="PackedScene" uid="uid://cd0epnlj52msn" path="res://random box.tscn" id="3_xw0rh"]
+[ext_resource type="FontFile" uid="uid://dclnph7050bji" path="res://font/Cubic_11_1.010_R.ttf" id="5_c8k77"]
+[ext_resource type="Script" path="res://script/SlimeCount.gd" id="5_p7pj0"]
+[ext_resource type="PackedScene" uid="uid://b2p6fmavbudjh" path="res://GUN.tscn" id="5_x2di6"]
+[ext_resource type="Texture2D" uid="uid://dtxu6rk3j3n8l" path="res://Sprite/slime.png" id="6_eoic4"]
+[ext_resource type="PackedScene" uid="uid://dywgvl8fdc6le" path="res://end_scene.tscn" id="8_wt38g"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_lrivg"]
+normal = Vector2(0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_gyta5"]
+font = ExtResource("5_c8k77")
+font_size = 64
+outline_size = 20
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_3gaft"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_nv1do"]
+resource_name = "alarm"
+length = 0.5
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0.5, 0.5, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0dwkw"]
+_data = {
+"RESET": SubResource("Animation_3gaft"),
+"alarm": SubResource("Animation_nv1do")
+}
+
+[node name="Main" type="Node2D"]
+
+[node name="BackGround" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_right = 1960.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_vlsdg")
+
+[node name="Boundary" type="Node2D" parent="."]
+position = Vector2(-2, 426)
+
+[node name="Wall1" type="StaticBody2D" parent="Boundary"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundary/Wall1"]
+shape = SubResource("WorldBoundaryShape2D_lrivg")
+
+[node name="Wall2" type="StaticBody2D" parent="Boundary"]
+rotation = 4.71239
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundary/Wall2"]
+shape = SubResource("WorldBoundaryShape2D_lrivg")
+
+[node name="Wall3" type="StaticBody2D" parent="Boundary"]
+position = Vector2(0, 654)
+rotation = 3.14159
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundary/Wall3"]
+shape = SubResource("WorldBoundaryShape2D_lrivg")
+
+[node name="Wall4" type="StaticBody2D" parent="Boundary"]
+position = Vector2(1920, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundary/Wall4"]
+rotation = 1.5708
+shape = SubResource("WorldBoundaryShape2D_lrivg")
+
+[node name="Slimes" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Slime" parent="Slimes" instance=ExtResource("1_8cidp")]
+position = Vector2(784, 683)
+
+[node name="Slime2" parent="Slimes" instance=ExtResource("1_8cidp")]
+position = Vector2(991, 659)
+
+[node name="Slime3" parent="Slimes" instance=ExtResource("1_8cidp")]
+position = Vector2(1638, 821)
+
+[node name="Slime4" parent="Slimes" instance=ExtResource("1_8cidp")]
+position = Vector2(1280, 586)
+
+[node name="Slime5" parent="Slimes" instance=ExtResource("1_8cidp")]
+position = Vector2(516, 553)
+
+[node name="Slime6" parent="Slimes" instance=ExtResource("1_8cidp")]
+position = Vector2(150, 933)
+
+[node name="Slime7" parent="Slimes" instance=ExtResource("1_8cidp")]
+position = Vector2(1505, 601)
+
+[node name="Slime8" parent="Slimes" instance=ExtResource("1_8cidp")]
+position = Vector2(165, 643)
+
+[node name="Slime9" parent="Slimes" instance=ExtResource("1_8cidp")]
+position = Vector2(802, 938)
+
+[node name="Slime10" parent="Slimes" instance=ExtResource("1_8cidp")]
+position = Vector2(1365, 935)
+
+[node name="Slime11" parent="Slimes" instance=ExtResource("1_8cidp")]
+position = Vector2(387, 798)
+
+[node name="Gun" parent="." instance=ExtResource("5_x2di6")]
+position = Vector2(1710, 189)
+move_speed = 500.0
+
+[node name="RandomBox" parent="." instance=ExtResource("3_xw0rh")]
+z_index = 1
+position = Vector2(1756, 948)
+
+[node name="SlimeCount" type="Label" parent="."]
+offset_left = 151.0
+offset_top = 7.0
+offset_right = 225.0
+offset_bottom = 98.0
+text = "10"
+label_settings = SubResource("LabelSettings_gyta5")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("5_p7pj0")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="SlimeCount"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_0dwkw")
+}
+
+[node name="SlimeIcon" type="Sprite2D" parent="."]
+position = Vector2(81, 58)
+texture = ExtResource("6_eoic4")
+hframes = 14
+vframes = 6
+
+[node name="EndScene" parent="." instance=ExtResource("8_wt38g")]
+visible = false
+
+[connection signal="finished" from="RandomBox" to="Gun" method="enable"]
+[connection signal="used" from="RandomBox" to="Gun" method="disable"]

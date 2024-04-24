@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://dl60uv5ufbyxo"]
+
+[ext_resource type="Script" path="res://script/slime.gd" id="1_wq4mo"]
+[ext_resource type="Script" path="res://script/movement/RandomMove.gd" id="2_kune2"]
+
+[node name="slime_test" type="CharacterBody2D"]
+position = Vector2(912, 464)
+motion_mode = 1
+script = ExtResource("1_wq4mo")
+
+[node name="Movement" type="Node" parent="."]
+
+[node name="RandomMove" type="Node" parent="Movement"]
+script = ExtResource("2_kune2")
+
+[node name="HungryMove" type="Node" parent="Movement"]
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-20, -20, 20, -20, 20, 20, -20, 20)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-20, -20, 20, -20, 20, 20, -20, 20)
+
+[node name="MoveTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="SplitTimer" type="Timer" parent="."]
+wait_time = 2.5
+autostart = true
+
+[connection signal="timeout" from="MoveTimer" to="." method="change_direction"]
+[connection signal="timeout" from="SplitTimer" to="." method="split"]

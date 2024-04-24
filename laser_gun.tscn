@@ -1,0 +1,62 @@
+[gd_scene load_steps=5 format=3 uid="uid://hkv4h00k4e5v"]
+
+[ext_resource type="Script" path="res://script/laser_gun.gd" id="1_8klol"]
+
+[sub_resource type="Curve" id="Curve_n46sx"]
+_data = [Vector2(0.232323, 0.418182), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="CurveTexture" id="CurveTexture_vmbld"]
+texture_mode = 1
+curve = SubResource("Curve_n46sx")
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uxtjp"]
+radius = 23.0
+height = 80.0874
+
+[node name="LaserGun" type="Node2D"]
+position = Vector2(1548, 147)
+script = ExtResource("1_8klol")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(52, 0)
+scale = Vector2(0.738281, 97)
+texture = SubResource("CurveTexture_vmbld")
+
+[node name="ShootButton" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -26.5
+offset_top = -15.5
+offset_right = 26.5
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Shoot
+"
+
+[node name="Node" type="Node" parent="."]
+
+[node name="TargetBody" type="StaticBody2D" parent="Node"]
+position = Vector2(1314, 713)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node/TargetBody"]
+rotation = 1.55459
+shape = SubResource("CapsuleShape2D_uxtjp")
+
+[node name="TargetIcon" type="Sprite2D" parent="Node/TargetBody"]
+
+[node name="HitArea" type="Area2D" parent="Node/TargetBody"]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node/TargetBody/HitArea"]
+rotation = 1.55459
+shape = SubResource("CapsuleShape2D_uxtjp")
+
+[connection signal="pressed" from="ShootButton" to="." method="_on_shoot_button_pressed"]

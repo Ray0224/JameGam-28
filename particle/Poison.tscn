@@ -1,0 +1,73 @@
+[gd_scene load_steps=8 format=3 uid="uid://b45e7ho5pa5os"]
+
+[ext_resource type="Script" path="res://script/particle/Poison.gd" id="1_0m7qy"]
+[ext_resource type="Texture2D" uid="uid://p4lrby3sxbng" path="res://RayTest/particles/ball.png" id="1_tncpi"]
+
+[sub_resource type="Curve" id="Curve_wh83m"]
+_data = [Vector2(0, 0.6), 0.0, 0.0, 0, 0, Vector2(1, 0.172727), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_s50f1"]
+offsets = PackedFloat32Array(0, 0.735465, 0.997093, 1)
+colors = PackedColorArray(0.288941, 0.617751, 0.397533, 1, 0.317647, 0.52549, 0.180392, 0.776471, 0.317647, 0.52549, 0.180392, 0.0588235, 1, 1, 1, 0)
+
+[sub_resource type="Animation" id="Animation_g14i3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_6dyoj"]
+resource_name = "cast"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b4obd"]
+_data = {
+"RESET": SubResource("Animation_g14i3"),
+"cast": SubResource("Animation_6dyoj")
+}
+
+[node name="Poison" type="Node2D"]
+script = ExtResource("1_0m7qy")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 100
+lifetime = 3.0
+randomness = 0.53
+texture = ExtResource("1_tncpi")
+emission_shape = 1
+emission_sphere_radius = 50.55
+direction = Vector2(0, -1)
+spread = 0.0
+gravity = Vector2(0, -10)
+initial_velocity_min = 50.0
+initial_velocity_max = 100.0
+scale_amount_curve = SubResource("Curve_wh83m")
+color_ramp = SubResource("Gradient_s50f1")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_b4obd")
+}

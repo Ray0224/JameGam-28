@@ -1,0 +1,139 @@
+[gd_scene load_steps=16 format=3 uid="uid://b2p6fmavbudjh"]
+
+[ext_resource type="Texture2D" uid="uid://rgxunc8xcv1e" path="res://Sprite/gun01.png" id="1_4ur1v"]
+[ext_resource type="Script" path="res://script/laser_gun.gd" id="1_ye0vd"]
+[ext_resource type="Texture2D" uid="uid://ccj6b2pc6ch5" path="res://Sprite/gun02.png" id="2_dnf28"]
+[ext_resource type="Texture2D" uid="uid://bkejtc6g2mxg8" path="res://Sprite/laser.png" id="2_p55qm"]
+[ext_resource type="Texture2D" uid="uid://cpv0pmy76t0xk" path="res://Sprite/push.png" id="3_ik7hm"]
+[ext_resource type="Texture2D" uid="uid://e4mfm5otr4rd" path="res://Sprite/crosshair.png" id="5_hsqim"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jgcra"]
+atlas = ExtResource("3_ik7hm")
+region = Rect2(0, 0, 164, 164)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_55ngn"]
+atlas = ExtResource("3_ik7hm")
+region = Rect2(172, 8, 147, 147)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_307u3"]
+radius = 30.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_536yt"]
+radius = 60.0
+
+[sub_resource type="Gradient" id="Gradient_jnla0"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qshvn"]
+gradient = SubResource("Gradient_jnla0")
+width = 200
+height = 200
+
+[sub_resource type="Animation" id="Animation_w5ho6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_3k6fw"]
+resource_name = "shoot"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 0), Vector2i(0, 1), Vector2i(0, 2), Vector2i(0, 3)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_t4pqf"]
+_data = {
+"RESET": SubResource("Animation_w5ho6"),
+"shoot": SubResource("Animation_3k6fw")
+}
+
+[node name="Gun" type="Node2D"]
+position = Vector2(959, 404)
+script = ExtResource("1_ye0vd")
+
+[node name="GunBody" type="Sprite2D" parent="."]
+texture = ExtResource("1_4ur1v")
+
+[node name="ShootButton" type="TextureButton" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+action_mode = 0
+texture_normal = SubResource("AtlasTexture_jgcra")
+texture_pressed = SubResource("AtlasTexture_55ngn")
+texture_disabled = SubResource("AtlasTexture_55ngn")
+stretch_mode = 3
+
+[node name="Node" type="Node" parent="."]
+
+[node name="TargetBody" type="StaticBody2D" parent="Node"]
+position = Vector2(948, 847)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node/TargetBody"]
+rotation = 1.55459
+shape = SubResource("CircleShape2D_307u3")
+
+[node name="TargetIcon" type="Sprite2D" parent="Node/TargetBody"]
+scale = Vector2(4, 4)
+texture = ExtResource("5_hsqim")
+
+[node name="HitArea" type="Area2D" parent="Node/TargetBody"]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node/TargetBody/HitArea"]
+rotation = 1.55459
+shape = SubResource("CircleShape2D_536yt")
+
+[node name="RotatePivot" type="Marker2D" parent="."]
+rotation = 0.71733
+
+[node name="MaskSprite" type="Sprite2D" parent="RotatePivot"]
+clip_children = 1
+z_index = 1
+texture = SubResource("GradientTexture2D_qshvn")
+
+[node name="Laser" type="Sprite2D" parent="RotatePivot/MaskSprite"]
+visible = false
+texture = ExtResource("2_p55qm")
+vframes = 4
+
+[node name="ShootPivot" type="Marker2D" parent="RotatePivot"]
+position = Vector2(200, 0)
+
+[node name="Barrel" type="Sprite2D" parent="RotatePivot"]
+z_index = 1
+texture = ExtResource("2_dnf28")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../RotatePivot/MaskSprite/Laser")
+libraries = {
+"": SubResource("AnimationLibrary_t4pqf")
+}
+
+[connection signal="pressed" from="ShootButton" to="." method="_on_shoot_button_pressed"]

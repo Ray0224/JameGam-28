@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://bjouojamf8htp"]
+
+[ext_resource type="AudioStream" uid="uid://baicundk5q1sh" path="res://sound/Bgm.ogg" id="1_uqbft"]
+[ext_resource type="Script" path="res://script/bgm_manager.gd" id="1_xtti4"]
+[ext_resource type="AudioStream" uid="uid://cqvpdwya58t0t" path="res://sound/warning.ogg" id="2_rtkhy"]
+
+[node name="BGMManager" type="Node"]
+process_mode = 3
+script = ExtResource("1_xtti4")
+
+[node name="BGM" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("1_uqbft")
+autoplay = true
+
+[node name="Warning" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_rtkhy")

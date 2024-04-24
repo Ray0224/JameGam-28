@@ -1,0 +1,216 @@
+[gd_scene load_steps=12 format=3 uid="uid://dywgvl8fdc6le"]
+
+[ext_resource type="Texture2D" uid="uid://j87dvx3d0gaa" path="res://Sprite/END.png" id="1_n7aqs"]
+[ext_resource type="Script" path="res://script/end_scene.gd" id="1_xwv0d"]
+[ext_resource type="Texture2D" uid="uid://boc4b6b2wyrd2" path="res://Sprite/smoke.png" id="2_0gdre"]
+[ext_resource type="PackedScene" uid="uid://bg3r734lreufo" path="res://retry.tscn" id="4_lock5"]
+
+[sub_resource type="Animation" id="Animation_ysmjm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -2000)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CPUParticles2D:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CPUParticles2D2:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_5348t"]
+resource_name = "failed"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1000, -2000), Vector2(1000, 700)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 0.4), Vector2(1, 1.354), Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CPUParticles2D:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CPUParticles2D2:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_r3xel"]
+_data = {
+"RESET": SubResource("Animation_ysmjm"),
+"failed": SubResource("Animation_5348t")
+}
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_aq4js"]
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="Curve" id="Curve_hh5tp"]
+min_value = -200.0
+max_value = 380.22
+_data = [Vector2(0.00823045, 380.22), 0.0, 0.0, 0, 0, Vector2(0.617284, -200), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_eijfc"]
+max_value = 5.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.0987654, 1.422), 0.0, 0.0, 0, 0, Vector2(1, 0.632), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_xuspv"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="EndScene" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_xwv0d")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Failed")
+libraries = {
+"": SubResource("AnimationLibrary_r3xel")
+}
+
+[node name="Failed" type="Sprite2D" parent="."]
+position = Vector2(0, -2000)
+texture = ExtResource("1_n7aqs")
+offset = Vector2(0, -160)
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Failed"]
+modulate = Color(0.568627, 0.568627, 0.568627, 0.403922)
+material = SubResource("CanvasItemMaterial_aq4js")
+position = Vector2(-420, -4.00002)
+rotation = -1.22173
+emitting = false
+amount = 25
+one_shot = true
+explosiveness = 1.0
+texture = ExtResource("2_0gdre")
+emission_shape = 1
+emission_sphere_radius = 23.82
+direction = Vector2(0, -1)
+spread = 45.35
+gravity = Vector2(0, -50)
+initial_velocity_max = 387.65
+angular_velocity_min = 0.05
+angular_velocity_max = 111.62
+linear_accel_max = 6.2
+linear_accel_curve = SubResource("Curve_hh5tp")
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_eijfc")
+color_ramp = SubResource("Gradient_xuspv")
+anim_speed_max = 0.5
+anim_offset_max = 1.0
+
+[node name="CPUParticles2D2" type="CPUParticles2D" parent="Failed"]
+modulate = Color(0.568627, 0.568627, 0.568627, 0.403922)
+material = SubResource("CanvasItemMaterial_aq4js")
+position = Vector2(499, 3.99998)
+rotation = 1.22173
+emitting = false
+amount = 25
+one_shot = true
+explosiveness = 1.0
+texture = ExtResource("2_0gdre")
+emission_shape = 1
+emission_sphere_radius = 23.82
+direction = Vector2(0, -1)
+spread = 45.35
+gravity = Vector2(0, -50)
+initial_velocity_max = 387.65
+angular_velocity_min = 0.05
+angular_velocity_max = 111.62
+linear_accel_max = 6.2
+linear_accel_curve = SubResource("Curve_hh5tp")
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_eijfc")
+color_ramp = SubResource("Gradient_xuspv")
+anim_speed_max = 0.5
+anim_offset_max = 1.0
+
+[node name="retry" parent="." instance=ExtResource("4_lock5")]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -88.0
+offset_top = -280.0
+offset_right = 88.0
+offset_bottom = -104.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[connection signal="pressed" from="retry" to="." method="_on_retry_pressed"]
